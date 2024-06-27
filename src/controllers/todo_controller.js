@@ -1,4 +1,4 @@
-import { Controller } from "@hotwired/stimulus";
+import { Controller } from "https://unpkg.com/@hotwired/stimulus@3.0.1/dist/stimulus.js";
 
 export default class extends Controller {
   static targets = ["description", "show", "mainButton", "span", "entity"];
@@ -6,6 +6,7 @@ export default class extends Controller {
   initialize() {
     this.tasks = [];
   }
+
   connect() {}
 
   listenEvent(event) {
@@ -21,7 +22,7 @@ export default class extends Controller {
       <button data-action="todo#completed" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm p-2 text-center me-2 mb-2 mt-1">Completed</button>
       <button data-action="todo#delete" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm p-2 text-center me-2 mb-2">Delete</button>
       </div>
-      `;
+    `;
     this.tasks.unshift(taskHtml);
     this.descriptionTarget.value = "";
     this.updateShowTarget();
@@ -29,22 +30,15 @@ export default class extends Controller {
 
   delete(event) {
     const parent = event.target.closest("[data-todo-target]");
-    console.log(parent);
     const index = parseInt(parent.getAttribute("index"), 10);
-    console.log(index);
     this.tasks.splice(index, 1);
     this.updateShowTarget();
   }
 
   completed(event) {
-    // const parent = event.target.parentElement;
-    // const index = parent.value;
-    // const spanElement = parent.querySelector("span");
     const parent = event.target.closest('[data-todo-target="entity"]');
     const index = parseInt(parent.getAttribute("index"), 10);
-    console.log(index);
     const spanElement = parent.querySelector("span");
-    console.log(spanElement);
 
     spanElement.innerHTML = `<del class="mt-2">${spanElement.textContent}</del>`;
 
@@ -58,16 +52,14 @@ export default class extends Controller {
     Delete
   </button>
       </div>
-      `;
+    `;
 
     this.tasks[index] = taskHtml;
     this.updateShowTarget();
   }
+
   edit(event) {
     const parent = event.target.closest('[data-todo-target="entity"]');
-    console.log(parent);
-    console.log(event.currentTarget.innerText);
-
     const index = parseInt(parent.getAttribute("index"), 10);
     const description = parent.querySelector("span").innerHTML;
 
@@ -77,11 +69,9 @@ export default class extends Controller {
     this.mainButton.disabled = true;
     this.updateShowTarget();
 
-    // Attach the event listener to the newly added edit input field
     const editInput = this.element.querySelector("#edit-input");
     const editButton = this.element.querySelector("#edit-button");
     editInput.addEventListener("keypress", (event) => {
-      console.log("in the target function");
       if (event.key === "Enter") {
         editButton.click();
       }
@@ -91,7 +81,6 @@ export default class extends Controller {
   update(event) {
     const updated_description = document.getElementById("edit-input").value;
     const parent = event.target.closest("[data-todo-target]");
-    console.log(parent);
     const index = parseInt(parent.getAttribute("index"), 10);
     const updated_entry = `<span data-action="click->todo#edit class="inline-block pt-2">${updated_description}</span>
     <div>
