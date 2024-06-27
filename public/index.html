@@ -4,12 +4,34 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="main.css" />
     <script src="bundle.js" async></script>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <div data-controller="todo">
-      <input type="text" data-todo-target="description" />
-      <button data-action="todo#addTask">Add task</button>
-      <div data-todo-target="show"></div>
+    <div
+      data-controller="todo"
+      class="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden mt-16"
+    >
+      <div class="px-4 py-2">
+        <h1 class="text-gray-800 font-bold text-2xl uppercase">To-Do List</h1>
+      </div>
+      <div
+        class="flex items-center border-b-2 border-teal-500 py-1 mb-3 w-full max-w-sm mx-auto px-4"
+      >
+        <input
+          type="text"
+          data-todo-target="description"
+          data-action="keydown->todo#listenEvent"
+          class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 px-2 leading-tight focus:outline-none"
+        />
+        <button
+          data-action="todo#addTask"
+          data-todo-target="mainButton"
+          class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium p-3 rounded text-sm"
+        >
+          Add
+        </button>
+      </div>
+      <div data-todo-target="show" class="divide-y divide-gray-200 px-8"></div>
     </div>
   </body>
 </html>
